@@ -1,0 +1,37 @@
+// Name: Hidayat Ullah
+// Registration Number: BF25NWELE0685
+// Instructor: Rizwan Sir
+// Department: Electrical and Computing (AI)
+
+// Program to calculate resistance using Ohm's Law (R = V / I)
+
+#include <iostream>   // iostream library include ki jati hai taake hum input (cin) aur output (cout) use kar saken
+using namespace std;  // std namespace use kar rahe hain taake har jagah std:: na likhna pade
+
+int main()            // main function program ka starting point hota hai
+{
+    // Teen float type variables declare kiye aur 0 se initialize kiya
+    float voltage = 0, current = 0, resistance = 0;  
+    // voltage   -> user se input lene ke liye
+    // current   -> user se input lene ke liye
+    // resistance -> calculate hone wali value store karega
+
+    cout << "Enter voltage (V): ";  
+    cin >> voltage;  
+    // User se voltage input liya aur variable me store kiya
+
+    cout << "Enter current (I): ";  
+    cin >> current;  
+    // User se current input liya aur variable me store kiya
+
+    resistance = voltage / current;  
+    // Ohm's Law apply kiya: Resistance = Voltage ÷ Current
+
+    // Calculated values display karna
+    cout << "\nVoltage = " << voltage << " V";  
+    cout << "\nCurrent = " << current << " A";  
+    cout << "\nResistance = " << resistance << " Ohm";  
+
+    return 0;  
+    // Program successfully end ho gaya
+}
