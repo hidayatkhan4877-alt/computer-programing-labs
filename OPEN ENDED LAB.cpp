@@ -1,0 +1,138 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+struct Student
+{
+    int regNo;
+    string name;
+
+    int marks[8];
+    string grades[8];
+    float cgpa;
+    int rank;
+};
+
+string getGrade(int m)
+{
+    if(m >= 85) return "A+";
+    else if(m >= 75) return "A";
+    else if(m >= 65) return "B+";
+    else if(m >= 55) return "B";
+    else if(m >= 45) return "C+";
+    else if(m >= 40) return "C";
+    else if(m >= 35) return "D";
+    else return "F";
+}
+
+float getPoint(string g)
+{
+    if(g=="A+") return 4.0;
+    if(g=="A") return 3.7;
+    if(g=="B+") return 3.3;
+    if(g=="B") return 3.0;
+    if(g=="C+") return 2.7;
+    if(g=="C") return 2.3;
+    if(g=="D") return 2.0;
+    return 0.0;
+}
+
+int main()
+{
+    const int SIZE = 50;
+    Student s[SIZE];
+
+    string names[50] =
+    {
+        "Ali","Ahmed","Usman","Hamza","Bilal","Zain","Hassan","Fahad","Saad","Omar",
+        "Yasir","Asad","Shahzaib","Talha","Abdullah","Ayan","Rizwan","Irfan","Danish","Kamran",
+        "Noman","Sufyan","Taha","Huzaifa","Ahsan","Imran","Zeeshan","Arslan","Rehan","Junaid",
+        "Kashif","Waqas","Shahbaz","Farhan","Adil","Mudassar","Faisal","Naveed","Saif","Haris",
+        "Fawad","Musa","Raza","Khalid","Nadir","Sami","Yousaf","Adeel","Ibrahim","Shayan"
+    };
+
+    int credit[8] = {3,2,3,3,3,1,1,2}; // credit hours
+
+    for(int i=0;i<SIZE;i++)
+    {
+        s[i].regNo = 3001+i;
+        s[i].name = names[i];
+
+        for(int j=0;j<8;j++)
+        {
+            s[i].marks[j] = 40 + ((i*7 + j*5) % 60);
+            s[i].grades[j] = getGrade(s[i].marks[j]);
+        }
+
+        float total=0, totalCredit=0;
+
+        for(int j=0;j<8;j++)
+        {
+            total += getPoint(s[i].grades[j]) * credit[j];
+            totalCredit += credit[j];
+        }
+
+        s[i].cgpa = total / totalCredit;
+    }
+
+    // Rank calculation
+    for(int i=0;i<SIZE;i++)
+    {
+        int r = 1;
+        for(int j=0;j<SIZE;j++)
+        {
+            if(s[j].cgpa > s[i].cgpa)
+                r++;
+        }
+        s[i].rank = r;
+    }
+
+    int reg;
+    bool found=false;
+
+    cout << "==========================================\n";
+    cout << " UNIVERSITY OF ENGINEERING AND TECHNOLOGY\n";
+    cout << " DEPARTMENT: ELECTRICAL AI\n";
+    cout << "==========================================\n";
+
+    cout << "\nEnter Registration Number: ";
+    cin >> reg;
+
+    for(int i=0;i<SIZE;i++)
+    {
+        if(s[i].regNo == reg)
+        {
+            found=true;
+
+            cout << "\n============= TRANSCRIPT =============\n";
+            cout << "Reg No : " << s[i].regNo << endl;
+            cout << "Name   : " << s[i].name << endl;
+
+            cout << "\nSubject\t    Marks\tGrade\tCredit\n";
+            string subjects[8] = {
+                "English  ","PakStudy","Mechanics","LinearAlgebra",
+                "Programming","Programing Lab","Workshop lab"," fehmi Quran"
+            };
+
+            for(int j=0;j<8;j++)
+            {
+                cout << subjects[j] << "\t"
+                     << s[i].marks[j] << "\t"
+                     << s[i].grades[j] << "\t"
+                     << credit[j] << endl;
+            }
+
+            cout << fixed << setprecision(2);
+            cout << "\nCGPA  : " << s[i].cgpa;
+            cout << "\nRank  : " << s[i].rank;
+
+            cout << "\n=====================================\n";
+        }
+    }
+
+    if(!found)
+        cout << "\nStudent Not Found!\n";
+
+    return 0;
+}
